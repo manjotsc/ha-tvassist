@@ -180,32 +180,6 @@ data:
   id: "doorbell"            # omit id to clear all
 ```
 
-## 🕗 On-screen display (dim + clock)
-
-Each TV also exposes `POST http://TV_IP:8455/set/overlay` to control the dimming layer and the
-always-on clock remotely (e.g. via a `rest_command`): `dim` 0–95, `clock` true/false, `corner` =
-`top_start | top_end | bottom_start | bottom_end`.
-
-## 🧩 Example automation
-
-```yaml
-automation:
-  - alias: Doorbell to bedroom TV
-    trigger:
-      - platform: state
-        entity_id: binary_sensor.doorbell
-        to: "on"
-    action:
-      - action: tv_assist.notify
-        data:
-          target: bedroom_tv
-          title: "Front door"
-          message: "Someone's at the door"
-          icon: "mdi:doorbell"
-          camera: "camera.front_door"
-          duration: 12
-```
-
 ## 💡 Seeing example values
 
 Every field ships with an example value. To load a fully-populated sample call:
