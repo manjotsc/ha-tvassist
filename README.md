@@ -27,6 +27,11 @@ Each TV running **TV Assist** (Settings → Notifications → Enable) is added a
 integration registers five actions — `tv_assist.notify`, `tv_assist.persistent`, `tv_assist.clear`,
 `tv_assist.speak`, and `tv_assist.play_sound` — that you target by picking a TV from a **dropdown**.
 
+> [!IMPORTANT]
+> This integration talks to the **TV Assist Android TV app**, which must be installed on each TV.
+> Grab the APK from the app's releases:
+> **[📺 Download TV Assist for Android TV →](https://github.com/manjotsc/tvassist_android/releases/tag/1.0.0)**
+
 ## ✨ Features
 
 - 🔔 **Rich notifications** — title, message, source line, MDI/Iconify/URL icons, custom colors, corner + size.
@@ -178,6 +183,32 @@ action: tv_assist.clear
 data:
   target: bedroom_tv
   id: "doorbell"            # omit id to clear all
+```
+
+## 🕗 On-screen display (dim + clock)
+
+Each TV also exposes `POST http://TV_IP:8455/set/overlay` to control the dimming layer and the
+always-on clock remotely (e.g. via a `rest_command`): `dim` 0–95, `clock` true/false, `corner` =
+`top_start | top_end | bottom_start | bottom_end`.
+
+## 🧩 Example automation
+
+```yaml
+automation:
+  - alias: Doorbell to bedroom TV
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.doorbell
+        to: "on"
+    action:
+      - action: tv_assist.notify
+        data:
+          target: bedroom_tv
+          title: "Front door"
+          message: "Someone's at the door"
+          icon: "mdi:doorbell"
+          camera: "camera.front_door"
+          duration: 12
 ```
 
 ## 💡 Seeing example values
