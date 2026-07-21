@@ -9,18 +9,6 @@
   Android&nbsp;TV running the <strong>TV Assist</strong> app — over your local network, no cloud.
 </p>
 
-<p align="center">
-  <a href="https://github.com/hacs/integration"><img src="https://img.shields.io/badge/HACS-Custom-41BDF5.svg?style=for-the-badge" alt="HACS Custom" /></a>
-  <a href="https://github.com/manjotsc/tv-assist-ha/releases"><img src="https://img.shields.io/github/v/release/manjotsc/tv-assist-ha?style=for-the-badge" alt="Release" /></a>
-  <img src="https://img.shields.io/badge/Home%20Assistant-2024.1%2B-41BDF5.svg?style=for-the-badge&logo=home-assistant&logoColor=white" alt="Home Assistant 2024.1+" />
-  <img src="https://img.shields.io/badge/iot__class-local__push-2ea44f.svg?style=for-the-badge" alt="Local push" />
-</p>
-
-<p align="center">
-  <a href="https://github.com/manjotsc/tv-assist-ha/actions/workflows/hassfest.yml"><img src="https://github.com/manjotsc/tv-assist-ha/actions/workflows/hassfest.yml/badge.svg" alt="Validate with hassfest" /></a>
-  <a href="https://github.com/manjotsc/tv-assist-ha/actions/workflows/validate.yml"><img src="https://github.com/manjotsc/tv-assist-ha/actions/workflows/validate.yml/badge.svg" alt="HACS validation" /></a>
-</p>
-
 ---
 
 Each TV running **TV Assist** (Settings → Notifications → Enable) is added as a **device**. The
