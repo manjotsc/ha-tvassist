@@ -1,0 +1,34 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Add a TV",
+        "description": "Enter a name and the address shown in the TV Assist app under Settings → Notifications. Each TV becomes a device you can pick from the dropdown when calling tv_assist.notify.",
+        "data": {
+          "name": "Name (e.g. Bedroom TV)",
+          "host": "TV IP address",
+          "port": "Port",
+          "device_identifier": "Device identifier (optional, stable — e.g. bedroom_tv)",
+          "token": "Access token (only if set on the TV under Notifications)"
+        }
+      }
+    },
+    "error": {
+      "invalid_identifier": "Use only lowercase letters, numbers and underscores."
+    },
+    "abort": {
+      "already_configured": "This TV is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "TV Assist options",
+        "description": "Set the access token to match the one shown on the TV under Settings → Notifications. Leave blank if the TV has no token.",
+        "data": {
+          "token": "Access token"
+        }
+      }
+    }
+  }
+}

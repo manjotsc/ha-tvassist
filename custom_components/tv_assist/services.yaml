@@ -1,0 +1,926 @@
+notify:
+  name: Send notification
+  description: Push a toast/banner notification to a TV running TV Assist.
+  fields:
+    device_id:
+      name: Device (dropdown)
+      description: Pick the TV from the dropdown. Note - this id changes if you re-add the integration.
+      required: false
+      selector:
+        device:
+          integration: tv_assist
+    target:
+      name: Device identifier (stable)
+      description: Stable identifier you set when adding the TV (e.g. bedroom_tv). Survives re-adding. Recommended for automations.
+      required: false
+      selector:
+        text:
+    host:
+      name: Host
+      description: Manual host or host:port (e.g. 192.168.1.50:8455). Use for a TV that isn't added.
+      required: false
+      advanced: true
+      selector:
+        text:
+    message:
+      name: Message
+      description: The notification body.
+      example: "Someone is at the door"
+      selector:
+        text:
+          multiline: true
+    title:
+      name: Title
+      description: The notification title.
+      example: "Front door"
+      selector:
+        text:
+    duration:
+      name: Duration
+      description: Seconds to show the notification. 0 = persistent (stays until cleared).
+      default: 8
+      selector:
+        number:
+          min: 0
+          max: 300
+          step: 1
+          unit_of_measurement: seconds
+          mode: slider
+    id:
+      name: Notification ID
+      description: Optional unique id; reusing it replaces the notification, and lets you clear it.
+      example: "doorbell"
+      selector:
+        text:
+
+    appearance:
+      name: Appearance
+      collapsed: true
+      fields:
+        color:
+          name: Border color
+          description: "Border color of the notification card — hex, rgb(...), or a name. Leave empty for no border."
+          example: "#F39C12"
+          selector:
+            text:
+        background_color:
+          name: Background
+          description: 'Card background color: hex (#AARRGGBB alpha ok), rgb(...), a name, or "transparent". Use Background opacity for transparency.'
+          example: "#1E2228"
+          selector:
+            text:
+        background_opacity:
+          name: Background opacity
+          description: How opaque the card background is (0 = fully transparent, 100 = solid). Overrides the color's own alpha.
+          advanced: true
+          default: 100
+          selector:
+            number:
+              min: 0
+              max: 100
+              step: 1
+              unit_of_measurement: "%"
+              mode: slider
+        message_color:
+          name: Message color
+          description: "Message text color — hex, rgb(...), or a name like red/pink/black."
+          example: "#DDDDDD"
+          selector:
+            text:
+        title_color:
+          name: Title color
+          description: "Title text color — hex, rgb(...), or a name like red/pink/black."
+          example: "#FFFFFF"
+          selector:
+            text:
+        source:
+          name: Source
+          description: Small grey line shown above the title (e.g. "Home Assistant").
+          example: "Home Assistant"
+          selector:
+            text:
+        source2:
+          name: Source (2nd)
+          description: Optional second source segment, shown after Source with a "•" (e.g. "RestAPI").
+          advanced: true
+          example: "RestAPI"
+          selector:
+            text:
+        source_color:
+          name: Source color
+          description: "Source text color — hex, rgb(...), or a name like red/pink/black."
+          advanced: true
+          example: "#AAAAAA"
+          selector:
+            text:
+        position:
+          name: Position
+          description: Which corner/edge the notification appears in.
+          selector:
+            select:
+              mode: dropdown
+              options:
+                - label: "Top left"
+                  value: "top-left"
+                - label: "Top center"
+                  value: "top-center"
+                - label: "Top right"
+                  value: "top-right"
+                - label: "Bottom left"
+                  value: "bottom-left"
+                - label: "Bottom center"
+                  value: "bottom-center"
+                - label: "Bottom right"
+                  value: "bottom-right"
+        size:
+          name: Size
+          description: Overall scale (text/icon/media). Width still auto-fits the content.
+          selector:
+            select:
+              mode: dropdown
+              options:
+                - label: "Extra small"
+                  value: "extra-small"
+                - label: "Small"
+                  value: "small"
+                - label: "Medium"
+                  value: "medium"
+                - label: "Large"
+                  value: "large"
+
+    icons:
+      name: Icons
+      collapsed: true
+      fields:
+        icon:
+          name: Icon
+          description: "Large icon — pick an MDI icon (or type an Iconify name). For a URL/avatar use Icon URL below."
+          example: "mdi:doorbell"
+          selector:
+            icon:
+        icon_url:
+          name: Icon URL
+          description: "Large icon from a URL — SVG/PNG/JPG, or an entity_picture/avatar path. Used if Icon is empty."
+          example: "http://192.168.1.10:8123/local/avatar.png"
+          selector:
+            text:
+        icon_color:
+          name: Icon color
+          description: "Tint for the large icon — hex, rgb(...), or a name. Ignored for photo/PNG/JPG icons."
+          example: "#FFFFFF"
+          selector:
+            text:
+        icon_size:
+          name: Icon size
+          description: Max large-icon size in dp (it caps to the text-block height, so it fills next to multi-line text).
+          advanced: true
+          default: 64
+          selector:
+            number:
+              min: 16
+              max: 120
+              step: 1
+              unit_of_measurement: dp
+              mode: slider
+        icon_background:
+          name: Icon background
+          description: 'Background behind the large icon: hex (#AARRGGBB alpha ok), rgb(...), a name, or "transparent".'
+          advanced: true
+          example: "transparent"
+          selector:
+            text:
+        icon_background_opacity:
+          name: Icon background opacity
+          description: How opaque the icon background is (0 = transparent, 100 = solid).
+          advanced: true
+          default: 100
+          selector:
+            number:
+              min: 0
+              max: 100
+              step: 1
+              unit_of_measurement: "%"
+              mode: slider
+        small_icon:
+          name: Small icon
+          description: "Small badge on the large icon's corner — pick an MDI icon (or type an Iconify name)."
+          example: "mdi:home"
+          selector:
+            icon:
+        small_icon_url:
+          name: Small icon URL
+          description: "Small badge from a URL — SVG/PNG/JPG or avatar. Used if Small icon is empty."
+          example: "http://192.168.1.10:8123/local/badge.png"
+          selector:
+            text:
+        small_icon_color:
+          name: Small icon color
+          description: "Tint for the small badge icon — hex, rgb(...), or a name."
+          example: "#4CAF50"
+          selector:
+            text:
+        small_icon_size:
+          name: Small icon size
+          description: Small badge size in dp.
+          advanced: true
+          default: 22
+          selector:
+            number:
+              min: 10
+              max: 60
+              step: 1
+              unit_of_measurement: dp
+              mode: slider
+        small_icon_background:
+          name: Small icon background
+          description: 'Background behind the small badge icon: hex, rgb(...), a name, or "transparent".'
+          advanced: true
+          example: "transparent"
+          selector:
+            text:
+        small_icon_background_opacity:
+          name: Small icon background opacity
+          description: How opaque the small badge background is (0 = transparent, 100 = solid).
+          advanced: true
+          default: 100
+          selector:
+            number:
+              min: 0
+              max: 100
+              step: 1
+              unit_of_measurement: "%"
+              mode: slider
+
+    media:
+      name: Media (camera / image / video)
+      collapsed: true
+      fields:
+        camera:
+          name: Camera screenshot
+          description: A camera entity — the TV fetches and shows a still snapshot.
+          example: "camera.front_door"
+          selector:
+            entity:
+              domain: camera
+        camera_stream:
+          name: Camera stream
+          description: >-
+            A camera entity — the TV plays its live stream (video) in the card. NOTE: this uses Home
+            Assistant's HLS stream, which can take several seconds to start and adds CPU load on HA.
+            For the fastest start, use Media URL with the camera's direct rtsp:// address instead.
+          example: "camera.front_door"
+          selector:
+            entity:
+              domain: camera
+        image:
+          name: Image URL
+          description: A direct image URL to show in the notification.
+          example: "http://192.168.1.10:8123/local/snap.jpg"
+          selector:
+            text:
+        media_url:
+          name: Media URL
+          description: "An image URL, or a video/stream URL (rtsp://…, …​.m3u8 HLS, …​.mpd DASH). Type is auto-detected."
+          example: "rtsp://192.168.1.20:554/stream"
+          selector:
+            text:
+        media_type:
+          name: Media type
+          description: "Force how Media URL is treated when auto-detection can't tell (e.g. an http MP4 or a tokenised stream with no rtsp/HLS/DASH hint). Blank = auto-detect."
+          advanced: true
+          selector:
+            select:
+              options:
+                - label: "Video / stream"
+                  value: "video"
+                - label: "Image (still)"
+                  value: "image"
+        player:
+          name: Video player
+          description: Engine for video/camera streams. VLC handles more cameras (HEVC, quirky RTSP) with a software fallback; ExoPlayer is lighter/lower-latency.
+          advanced: true
+          selector:
+            select:
+              mode: dropdown
+              options:
+                - label: "Auto (ExoPlayer; VLC for RTSP)"
+                  value: "auto"
+                - label: "ExoPlayer"
+                  value: "exoplayer"
+                - label: "VLC"
+                  value: "vlc"
+
+    audio:
+      name: Audio (speak / sound)
+      collapsed: true
+      fields:
+        speak_mode:
+          name: Speak aloud
+          description: "Announce this notification through the TV speakers (TTS). Leave unset for no announcement. TV default uses this TV's Audio-settings preference; the others override it — Together reads \"Title. Message\" in one utterance, Separate speaks the title then the message, or voice just one field."
+          selector:
+            select:
+              options:
+                - label: "TV default (Audio settings)"
+                  value: "default"
+                - label: "Together — Title. Message"
+                  value: "both"
+                - label: "Separate — title, then message"
+                  value: "separate"
+                - label: "Message only"
+                  value: "message"
+                - label: "Title only"
+                  value: "title"
+        speak_repeat:
+          name: Repeat speech
+          description: "Whether the spoken announcement repeats until the notification leaves the screen. Blank = this TV's Audio-settings default. A pinned notification (duration 0) is capped at 60s."
+          selector:
+            select:
+              options:
+                - label: "Read once"
+                  value: "once"
+                - label: "Repeat until dismissed"
+                  value: "loop"
+        speak_repeat_gap:
+          name: Repeat interval
+          description: "Seconds to pause between repeats of the spoken announcement (only when Repeat speech = loop). Blank = this TV's Audio-settings default. The next read starts only after the current one finishes, so it never overlaps."
+          advanced: true
+          example: 2
+          selector:
+            number:
+              min: 0
+              max: 60
+              step: 1
+              unit_of_measurement: seconds
+              mode: box
+        sound:
+          name: Sound file
+          description: "Also play an audio file (chime/MP3) alongside the notification — a URL the TV can reach (e.g. http://homeassistant:8123/local/doorbell.mp3)."
+          example: "http://homeassistant.local:8123/local/doorbell.mp3"
+          selector:
+            text:
+        sound_repeat:
+          name: Repeat sound file
+          description: "Whether the sound file loops until the notification leaves the screen. Blank = this TV's Audio-settings default. A pinned notification (duration 0) is capped at 60s."
+          selector:
+            select:
+              options:
+                - label: "Play once"
+                  value: "once"
+                - label: "Loop until dismissed"
+                  value: "loop"
+        language:
+          name: Speak language
+          description: "BCP-47 language tag for the announcement (e.g. en-US, fr-CA). Blank = device default."
+          advanced: true
+          example: "en-US"
+          selector:
+            text:
+        volume:
+          name: Announcement volume
+          description: "TTS/sound volume 0–100 (relative to the TV volume). Blank = this TV's Audio-settings default."
+          advanced: true
+          example: 80
+          selector:
+            number:
+              min: 0
+              max: 100
+              step: 5
+              mode: slider
+        duck:
+          name: Duck TV audio
+          description: Lower the current TV audio while announcing (default on).
+          advanced: true
+          selector:
+            boolean:
+
+    flash_section:
+      name: Flash / attention
+      collapsed: true
+      fields:
+        flash:
+          name: Flash / attention
+          description: Animate the card to grab attention (great for persistent alerts like a door left open).
+          selector:
+            select:
+              mode: dropdown
+              options:
+                - label: "None"
+                  value: "none"
+                - label: "Glow (pulsing border)"
+                  value: "glow"
+                - label: "Flash (color)"
+                  value: "flash"
+                - label: "Blink (fade in/out)"
+                  value: "blink"
+        flash_color:
+          name: Flash color
+          description: "Color for Glow/Flash modes — hex, rgb(...), or a name. Defaults to the border color or red."
+          example: "#FF5252"
+          selector:
+            text:
+        flash_speed:
+          name: Flash speed
+          description: "How long one flash cycle takes, in milliseconds — drag left for faster. (slow/medium/fast words also accepted.)"
+          advanced: true
+          example: 850
+          selector:
+            number:
+              min: 200
+              max: 3000
+              step: 50
+              unit_of_measurement: ms
+              mode: slider
+
+    interactive_section:
+      name: Interactive
+      collapsed: true
+      fields:
+        interactive:
+          name: Interactive
+          description: "Let the remote act on it: OK enlarges the camera fullscreen, BACK dismisses. Best with a camera and duration 0 (persistent)."
+          selector:
+            boolean:
+        enlarge_timeout:
+          name: Interactive hold (seconds)
+          description: "For an interactive notification: once opened (enlarged), how many seconds to keep it before auto-closing. 0 = keep it open until BACK. Blank = this TV's default (Notifications settings)."
+          example: 8
+          selector:
+            number:
+              min: 0
+              max: 3600
+              step: 5
+              unit_of_measurement: seconds
+              mode: box
+
+persistent:
+  name: Persistent pill
+  description: Pin a small persistent pill (icon + optional text) to a corner of the TV. Update or remove it by id.
+  fields:
+    device_id:
+      name: Device (dropdown)
+      description: Pick the TV from the dropdown.
+      required: false
+      selector:
+        device:
+          integration: tv_assist
+    target:
+      name: Device identifier (stable)
+      description: Stable identifier you set when adding the TV (e.g. bedroom_tv).
+      required: false
+      selector:
+        text:
+    host:
+      name: Host
+      description: Manual host or host:port (e.g. 192.168.1.50:8455).
+      required: false
+      advanced: true
+      selector:
+        text:
+    id:
+      name: Pill ID
+      description: Unique id for this pill — reuse it to update, and to remove it later.
+      required: true
+      example: "battery"
+      selector:
+        text:
+    icon:
+      name: Icon
+      description: "Pick an MDI icon (or type an Iconify name). For a URL/avatar use Icon URL below."
+      example: "mdi:battery-70"
+      selector:
+        icon:
+    message:
+      name: Text
+      description: Optional short text shown next to the icon (e.g. "88%").
+      example: "88%"
+      selector:
+        text:
+
+    style:
+      name: Icon & style
+      collapsed: true
+      fields:
+        icon_url:
+          name: Icon URL
+          description: "Icon from a URL — SVG/PNG/JPG or an avatar. Used if Icon is empty."
+          example: "http://192.168.1.10:8123/local/avatar.png"
+          selector:
+            text:
+        icon_color:
+          name: Icon color
+          description: "Icon tint — hex, rgb(...), or a name. Ignored for photo icons."
+          example: "#FFC107"
+          selector:
+            text:
+        icon_background:
+          name: Icon background
+          description: 'Background behind the icon: hex (#AARRGGBB alpha ok), rgb(...), a name, or "transparent". Empty = none.'
+          advanced: true
+          example: "transparent"
+          selector:
+            text:
+        icon_background_opacity:
+          name: Icon background opacity
+          description: How opaque the icon background is (0 = transparent, 100 = solid).
+          advanced: true
+          default: 100
+          selector:
+            number:
+              min: 0
+              max: 100
+              step: 1
+              unit_of_measurement: "%"
+              mode: slider
+        message_color:
+          name: Text color
+          description: "Text color — hex, rgb(...), or a name."
+          example: "#FFFFFF"
+          selector:
+            text:
+        shape:
+          name: Shape
+          description: Pill shape.
+          selector:
+            select:
+              mode: dropdown
+              options:
+                - label: "Rounded"
+                  value: "rounded"
+                - label: "Circle"
+                  value: "circle"
+                - label: "Rectangular"
+                  value: "rectangular"
+        border_color:
+          name: Border color
+          description: "Border color — hex, rgb(...), or a name. Empty = no border (bound pills auto-color by state)."
+          example: "#FFC107"
+          selector:
+            text:
+        background_color:
+          name: Background
+          description: 'Pill background: hex (#AARRGGBB alpha ok), rgb(...), a name, or "transparent".'
+          example: "#1E2228"
+          selector:
+            text:
+        background_opacity:
+          name: Background opacity
+          description: How opaque the pill background is (0 = transparent, 100 = solid). Overrides the color's own alpha.
+          advanced: true
+          default: 100
+          selector:
+            number:
+              min: 0
+              max: 100
+              step: 1
+              unit_of_measurement: "%"
+              mode: slider
+        position:
+          name: Position
+          description: Which corner the pill is pinned to (pills in the same corner line up in a row).
+          selector:
+            select:
+              mode: dropdown
+              options:
+                - label: "Top left"
+                  value: "top-left"
+                - label: "Top center"
+                  value: "top-center"
+                - label: "Top right"
+                  value: "top-right"
+                - label: "Bottom left"
+                  value: "bottom-left"
+                - label: "Bottom center"
+                  value: "bottom-center"
+                - label: "Bottom right"
+                  value: "bottom-right"
+
+    binding:
+      name: Live entity binding
+      collapsed: true
+      fields:
+        entity:
+          name: Bind to entity (live)
+          description: >-
+            Optional — bind the pill to an entity so its value, icon and color update live on the TV,
+            with no need to re-call this service. Leave empty for a static pill.
+          example: "sensor.bedroom_temperature"
+          selector:
+            entity:
+        attribute:
+          name: Attribute
+          description: For a bound pill — show this attribute instead of the state (e.g. battery_level).
+          example: "battery_level"
+          selector:
+            text:
+        label:
+          name: Label
+          description: 'For a bound pill — static text before the live value (e.g. "Bedroom" → "Bedroom 22°").'
+          example: "Bedroom"
+          selector:
+            text:
+
+    flash:
+      name: Flash / attention
+      collapsed: true
+      fields:
+        flash_border_color:
+          name: Flash border color
+          description: "Set a color to pulse the border for attention — hex, rgb(...), or a name. Empty = no border flash."
+          example: "#FF5252"
+          selector:
+            text:
+        flash_icon_color:
+          name: Flash icon color
+          description: "Set a color to pulse the icon for attention — hex, rgb(...), or a name. Empty = no icon flash."
+          example: "#FFC107"
+          selector:
+            text:
+        flash_border_type:
+          name: Border flash style
+          description: "How the border flash animates. Blink (hard on/off) makes the speed most obvious."
+          selector:
+            select:
+              mode: dropdown
+              options:
+                - label: "Pulse (smooth)"
+                  value: "pulse"
+                - label: "Blink (hard on/off)"
+                  value: "blink"
+                - label: "Glow (sustained)"
+                  value: "glow"
+        flash_icon_type:
+          name: Icon flash style
+          description: "How the icon flash animates. Blink (hard on/off) makes the speed most obvious."
+          selector:
+            select:
+              mode: dropdown
+              options:
+                - label: "Pulse (smooth)"
+                  value: "pulse"
+                - label: "Blink (hard on/off)"
+                  value: "blink"
+                - label: "Glow (sustained)"
+                  value: "glow"
+        flash_icon_speed:
+          name: Icon flash speed
+          description: "How long one icon flash cycle takes, in ms — drag left for faster. Empty = medium (850 ms)."
+          advanced: true
+          example: 850
+          selector:
+            number:
+              min: 200
+              max: 3000
+              step: 50
+              unit_of_measurement: ms
+              mode: slider
+        flash_border_speed:
+          name: Border flash speed
+          description: "How long one border flash cycle takes, in ms — drag left for faster. Empty = medium (850 ms)."
+          advanced: true
+          example: 850
+          selector:
+            number:
+              min: 200
+              max: 3000
+              step: 50
+              unit_of_measurement: ms
+              mode: slider
+
+    audio:
+      name: Audio (speak / sound)
+      collapsed: true
+      fields:
+        speak:
+          name: Speak aloud
+          description: "Announce the pill through the TV speakers (TTS) when it's pushed. Leave unset for silent. Pill text reads the pill's label + message; Custom text reads the Speak text field below. Uses this TV's Audio-settings defaults for volume/ducking/language."
+          selector:
+            select:
+              options:
+                - label: "Pill text (label + message)"
+                  value: "text"
+                - label: "Custom text (Speak text below)"
+                  value: "custom"
+        speak_text:
+          name: Speak text
+          description: "Custom words to speak — used only when Speak aloud is set to Custom text. Handy when the pill shows something terse like \"88%\" but should say \"Battery is at 88 percent\"."
+          example: "Garage door is open"
+          selector:
+            text:
+        speak_repeat:
+          name: Repeat speech
+          description: "Whether the speech repeats until the pill is removed (expires or cleared). Blank = this TV's Audio-settings default. A pinned-forever pill is capped at 60s."
+          selector:
+            select:
+              options:
+                - label: "Read once"
+                  value: "once"
+                - label: "Repeat until removed"
+                  value: "loop"
+        speak_repeat_gap:
+          name: Repeat interval
+          description: "Seconds to pause between repeats of the spoken announcement (only when Repeat speech = loop). Blank = this TV's Audio-settings default. The next read starts only after the current one finishes, so it never overlaps."
+          advanced: true
+          example: 2
+          selector:
+            number:
+              min: 0
+              max: 60
+              step: 1
+              unit_of_measurement: seconds
+              mode: box
+        sound:
+          name: Sound file
+          description: "Also play an audio file (chime/MP3) when the pill is pushed — a URL the TV can reach."
+          example: "http://homeassistant.local:8123/local/alert.mp3"
+          selector:
+            text:
+        sound_repeat:
+          name: Repeat sound file
+          description: "Whether the sound loops until the pill is removed (expires or cleared). Blank = this TV's Audio-settings default. A pinned-forever pill is capped at 60s."
+          selector:
+            select:
+              options:
+                - label: "Play once"
+                  value: "once"
+                - label: "Loop until removed"
+                  value: "loop"
+        language:
+          name: Speak language
+          description: "BCP-47 language tag for the announcement (e.g. en-US, fr-CA). Blank = device default."
+          advanced: true
+          example: "en-US"
+          selector:
+            text:
+        volume:
+          name: Announcement volume
+          description: "TTS/sound volume 0–100 (relative to the TV volume). Blank = this TV's Audio-settings default."
+          advanced: true
+          example: 80
+          selector:
+            number:
+              min: 0
+              max: 100
+              step: 5
+              mode: slider
+        duck:
+          name: Duck TV audio
+          description: Lower the current TV audio while announcing (default on).
+          advanced: true
+          selector:
+            boolean:
+
+    lifecycle:
+      name: Lifecycle
+      collapsed: true
+      fields:
+        expiration:
+          name: Expiration
+          description: Optional — auto-remove the pill after this many seconds (0/empty = stays until cleared).
+          example: 3600
+          selector:
+            number:
+              min: 0
+              max: 86400
+              step: 1
+              unit_of_measurement: seconds
+              mode: box
+
+clear:
+  name: Clear notification
+  description: Remove a notification or pill by id (or all of them) from a TV.
+  fields:
+    device_id:
+      name: Device (dropdown)
+      description: Pick the TV from the dropdown.
+      required: false
+      selector:
+        device:
+          integration: tv_assist
+    target:
+      name: Device identifier (stable)
+      description: Stable identifier you set when adding the TV (e.g. bedroom_tv).
+      required: false
+      selector:
+        text:
+    host:
+      name: Host
+      description: Manual host or host:port (e.g. 192.168.1.50:8455).
+      required: false
+      selector:
+        text:
+    id:
+      name: Notification ID
+      description: The id to clear. Leave empty to clear all notifications.
+      required: false
+      example: "doorbell"
+      selector:
+        text:
+
+speak:
+  name: Speak (TTS)
+  description: Announce text through the TV speakers using text-to-speech.
+  fields:
+    device_id:
+      name: Device (dropdown)
+      description: Pick the TV from the dropdown.
+      required: false
+      selector:
+        device:
+          integration: tv_assist
+    target:
+      name: Device identifier (stable)
+      description: Stable identifier you set when adding the TV (e.g. bedroom_tv).
+      required: false
+      selector:
+        text:
+    host:
+      name: Host
+      description: Manual host or host:port (e.g. 192.168.1.50:8455).
+      required: false
+      selector:
+        text:
+    message:
+      name: Message
+      description: The text to speak.
+      required: true
+      example: "The front door is unlocked"
+      selector:
+        text:
+    language:
+      name: Language
+      description: "BCP-47 language tag (e.g. en-US, fr-CA). Blank = device default."
+      required: false
+      example: "en-US"
+      selector:
+        text:
+    volume:
+      name: Volume
+      description: Announcement volume 0–100. Blank = full.
+      required: false
+      example: 80
+      selector:
+        number:
+          min: 0
+          max: 100
+          step: 5
+          mode: slider
+    duck:
+      name: Duck TV audio
+      description: Lower the current TV audio while speaking (default on).
+      required: false
+      selector:
+        boolean:
+    interrupt:
+      name: Interrupt
+      description: Barge in over any current announcement (default on); off queues after it.
+      required: false
+      selector:
+        boolean:
+
+play_sound:
+  name: Play sound
+  description: Play an audio file (chime/MP3/WAV) through the TV speakers.
+  fields:
+    device_id:
+      name: Device (dropdown)
+      description: Pick the TV from the dropdown.
+      required: false
+      selector:
+        device:
+          integration: tv_assist
+    target:
+      name: Device identifier (stable)
+      description: Stable identifier you set when adding the TV (e.g. bedroom_tv).
+      required: false
+      selector:
+        text:
+    host:
+      name: Host
+      description: Manual host or host:port (e.g. 192.168.1.50:8455).
+      required: false
+      selector:
+        text:
+    sound:
+      name: Sound URL
+      description: "A URL to an audio file the TV can reach (e.g. http://homeassistant:8123/local/doorbell.mp3)."
+      required: true
+      example: "http://homeassistant.local:8123/local/doorbell.mp3"
+      selector:
+        text:
+    volume:
+      name: Volume
+      description: "Volume 0–100 (relative to the TV volume). Blank = this TV's Audio-settings default."
+      required: false
+      example: 80
+      selector:
+        number:
+          min: 0
+          max: 100
+          step: 5
+          mode: slider
+    duck:
+      name: Duck TV audio
+      description: Lower the current TV audio while the sound plays (default on).
+      required: false
+      selector:
+        boolean:
