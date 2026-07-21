@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="custom_components/tv_assist/icons/icon.png" width="120" alt="TV Assist logo" />
+  <img src="custom_components/tv_assist/brand/logo.png" width="120" alt="TV Assist logo" />
 </p>
 
 <h1 align="center">TV Assist for Home Assistant</h1>
