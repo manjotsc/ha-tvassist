@@ -211,11 +211,3 @@ Every field ships with an example value. To load a fully-populated sample call:
 > The friendly **UI form** does *not* show `example:` values (only `default:` ones like *Duration = 8*),
 > so the YAML-mode button above is where the examples appear. The two targeting fields
 > (**Device identifier** / **Host**) are intentionally left blank for you to fill with your own TV.
-
-## 🤝 Contributing
-
-Issues and PRs are welcome at [manjotsc/tv-assist-ha](https://github.com/manjotsc/tv-assist-ha/issues).
-
-## 📄 License
-
-Released under the MIT License — see [`LICENSE`](LICENSE).
