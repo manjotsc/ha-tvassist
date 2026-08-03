@@ -18,7 +18,7 @@ integration registers five actions — `tv_assist.notify`, `tv_assist.persistent
 > [!IMPORTANT]
 > This integration talks to the **TV Assist Android TV app**, which must be installed on each TV.
 > Grab the APK from the app's releases:
-> **[📺 Download TV Assist for Android TV →](https://github.com/manjotsc/tvassist_android/releases/tag/1.0.0)**
+> **[📺 Download TV Assist for Android TV →](https://github.com/manjotsc/tvassist_android/releases)**
 
 ## ✨ Features
 
