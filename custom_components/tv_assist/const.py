@@ -97,6 +97,9 @@ ATTR_MEDIA_URL: Final = "media_url"
 ATTR_MEDIA_TYPE: Final = "media_type"
 VALID_MEDIA_TYPE: Final[list[str]] = ["video", "image"]
 ATTR_PLAYER: Final = "player"
+# RTP transport for an rtsp:// media_url: "tcp" (the TV's default — go2rtc/Frigate refuse UDP) or
+# "udp" (UDP first, for a camera that only streams over UDP).
+ATTR_RTSP_TRANSPORT: Final = "rtsp_transport"
 ATTR_FLASH: Final = "flash"
 ATTR_FLASH_COLOR: Final = "flash_color"
 ATTR_FLASH_SPEED: Final = "flash_speed"
@@ -105,6 +108,7 @@ ATTR_ID: Final = "id"
 VALID_FLASH: Final[list[str]] = ["none", "glow", "flash", "blink"]
 VALID_FLASH_SPEED: Final[list[str]] = ["slow", "medium", "fast"]
 VALID_PLAYER: Final[list[str]] = ["auto", "exoplayer", "vlc"]
+VALID_RTSP_TRANSPORT: Final[list[str]] = ["tcp", "udp"]
 # Persistent-pill extras
 ATTR_SHAPE: Final = "shape"
 ATTR_BORDER_COLOR: Final = "border_color"
@@ -138,6 +142,7 @@ PASSTHROUGH_STRING_ATTRS: Final[tuple[str, ...]] = (
     ATTR_ICON_BACKGROUND, ATTR_ICON_BACKGROUND_OPACITY, ATTR_SMALL_ICON_BACKGROUND,
     ATTR_SMALL_ICON_BACKGROUND_OPACITY, ATTR_POSITION, ATTR_SIZE,
     ATTR_IMAGE, ATTR_CAMERA, ATTR_CAMERA_STREAM, ATTR_MEDIA_URL, ATTR_MEDIA_TYPE, ATTR_PLAYER,
+    ATTR_RTSP_TRANSPORT,
     ATTR_FLASH, ATTR_FLASH_COLOR, ATTR_FLASH_SPEED, ATTR_ID,
     ATTR_LANGUAGE, ATTR_VOLUME, ATTR_DUCK, ATTR_INTERRUPT,
     ATTR_SOUND, ATTR_SOUND_REPEAT, ATTR_SPEAK_REPEAT, ATTR_SPEAK_REPEAT_GAP, ATTR_INTERACTIVE,

@@ -96,6 +96,8 @@ data:
   # camera_stream: "camera.front_door" # camera entity → the TV plays its live stream (video)
   # image: "http://…/snap.jpg"       # …or a direct image URL
   # media_url: "rtsp://…/stream"     # image OR a video/stream (rtsp/hls/dash); type auto-detected
+  # player: "auto"                   # auto | exoplayer | vlc  (auto: ExoPlayer, VLC if needed)
+  # rtsp_transport: "tcp"            # tcp (default; go2rtc/Frigate) | udp (UDP-only cameras)
   id: "doorbell"            # optional; reuse to replace / to clear
 ```
 

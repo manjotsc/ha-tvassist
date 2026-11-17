@@ -297,18 +297,30 @@ notify:
                   value: "image"
         player:
           name: Video player
-          description: Engine for video/camera streams. VLC handles more cameras (HEVC, quirky RTSP) with a software fallback; ExoPlayer is lighter/lower-latency.
+          description: Engine for video/camera streams. Auto plays on ExoPlayer and switches to VLC if ExoPlayer can't play the stream, or while another app holds the TV's video decoder.
           advanced: true
           selector:
             select:
               mode: dropdown
               options:
-                - label: "Auto (ExoPlayer; VLC for RTSP)"
+                - label: "Auto (ExoPlayer; VLC if needed)"
                   value: "auto"
                 - label: "ExoPlayer"
                   value: "exoplayer"
                 - label: "VLC"
                   value: "vlc"
+        rtsp_transport:
+          name: RTSP transport
+          description: For an rtsp:// media URL. TCP (the default) works with go2rtc and Frigate, which refuse UDP. Choose UDP only for a camera that streams over UDP alone; the TV then tries UDP first and falls back to TCP.
+          advanced: true
+          selector:
+            select:
+              mode: dropdown
+              options:
+                - label: "TCP (default)"
+                  value: "tcp"
+                - label: "UDP first"
+                  value: "udp"
 
     audio:
       name: Audio (speak / sound)
